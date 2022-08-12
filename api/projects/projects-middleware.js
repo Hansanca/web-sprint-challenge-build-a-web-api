@@ -1,20 +1,16 @@
- 
- const _ = require('lodash')
-
  const add = (req, res, next) => {
-    if(!_.get(req, 'body.name') || !_.get(req, 'body.description')) {
+    if(!req.body.name || !req.body.description) {
         return res.status(400).send({})
     }
-    next()
+    return next()
 }
 
 const update = (req, res, next) => {
-    if(_.get(req, 'body.name') || _.get(req, 'body.description') || _.get(req, 'body.completed')) {
-        next()
+    if(req.body.name && req.body.description && 'completed' in req.body) {
+        return next()
     }
     return res.status(400).send({})
 }
-
 module.exports = {
     add, update
 }
